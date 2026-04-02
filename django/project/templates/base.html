@@ -1,0 +1,28 @@
+{% load static %}
+
+<!doctype html>
+<html lang="es-ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %} Titulo App {% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/globalStyles.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    {% block extra_css%} {% endblock %}
+</head>
+<body>
+
+{% include 'header.html' %}
+
+<main>
+    {% block content %} {% endblock %}
+</main>
+
+{% include 'footer.html' %}
+
+{% block extra_js %} {% endblock %}
+</body>
+</html>
+

@@ -29,20 +29,21 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <form method="post" action="{% url 'register_sesion' %}">
+                <form method="post" action="{% url 'register_sesion' %}" id="form" novalidate>
                     {% csrf_token %}
                     {% for field in form %}
                         <div class="input-group has-validation">
                             <div class="form-floating mb-3">
                                 {{ field }}
                                 <label for="{{ field.widget.attrs.id }}">{{ field.label }}</label>
-                            </div>
-                            <div class="invalid-feedback">
-                                Please choose a username.
+                                <div class="invalid-feedback" id="{{ field.name }}-error"></div>
                             </div>
                         </div>
                     {% endfor %}
-                    <button class="btn btn-success fw-bold w-100" type="submit">Registrar Sesión</button>
+                    <button class="btn btn-success fw-bold w-100" type="submit" id="btn-submit">
+                         <span class="btn-text" id="btn-text">Registrar Sesión</span>
+                        <span class="spinner-border spinner-border-sm d-none" role="status" id="btn-spinner"></span>
+                    </button>
                 </form>
 
             </div>
@@ -53,5 +54,6 @@
 {% endblock %}
 
 {% block extra_js %}
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="{% static 'dashboard/js/registerSesionForm.js' %}"></script>
 {% endblock %}

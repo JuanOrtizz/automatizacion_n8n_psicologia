@@ -1,4 +1,5 @@
 import re
+from django.utils import timezone
 
 from django import forms
 
@@ -7,7 +8,8 @@ class SesionesForm(forms.Form):
         label='Nombre',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Ingresá el nombre del cliente',
+                'class': 'form-control',
+                'placeholder': ' ',
                 'id' : 'id_nombre'
             }
         ),
@@ -17,7 +19,8 @@ class SesionesForm(forms.Form):
         label='Día Preferido',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Ingresá el día preferido',
+                'class': 'form-control',
+                'placeholder': ' ',
                 'id': 'id_dia_preferido'
             }
         ),
@@ -25,9 +28,13 @@ class SesionesForm(forms.Form):
     )
     fecha_solicitud = forms.DateField(
         label='Fecha de Solicitud',
+        initial=timezone.now().date(),
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Ingresa la fecha de solicitud',
+                'class': 'form-control ',
+                'type': 'date',
+                'placeholder': ' ',
+                'readonly': 'readonly',
                 'id': 'id_fecha_solicitud'
             }
         ),
@@ -36,7 +43,8 @@ class SesionesForm(forms.Form):
         label='Teléfono',
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Ingresá el día preferido',
+                'class': 'form-control',
+                'placeholder': ' ',
                 'id': 'id_dia_preferido'
             }
         ),

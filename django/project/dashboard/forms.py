@@ -1,4 +1,6 @@
 import re
+
+from django.forms import Select
 from django.utils import timezone
 
 from django import forms
@@ -15,17 +17,21 @@ class SesionesForm(forms.Form):
         ),
         max_length=100
     )
-    dia_preferido = forms.CharField(
-        label='Día Preferido',
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control',
-                'placeholder': ' ',
-                'id': 'id_dia_preferido'
-            }
-        ),
-        max_length = 20
+
+    dia_preferido = forms.ChoiceField(
+        choices=[
+            ('', 'Selecciona un día'),
+            ('1', 'Lunes'),
+            ('2', 'Martes'),
+            ('3', 'Miércoles'),
+            ('4', 'Jueves'),
+            ('5', 'Viernes'),
+            ('6', 'Sábado'),
+            ('7', 'Domingo'),
+        ],
+        widget = Select(attrs={'id': 'id_dia_preferido', 'class': 'form-control'}),
     )
+
     fecha_solicitud = forms.DateField(
         label='Fecha de Solicitud',
         initial=timezone.now().date(),
@@ -45,7 +51,7 @@ class SesionesForm(forms.Form):
             attrs={
                 'class': 'form-control',
                 'placeholder': ' ',
-                'id': 'id_dia_preferido'
+                'id': 'id_telefono'
             }
         ),
         max_length=25
@@ -61,12 +67,9 @@ class SesionesForm(forms.Form):
         return nombre
 
     def clean_dia_preferido(self):
-        dia_preferido = self.cleaned_data.get('dia_preferido', '').strip()
-        if len(dia_preferido) >= 3 and len(dia_preferido) <= 20:
-            if not re.match(r'^[a-záéíóúñ]+(?:\s[a-záéíóúñ]+)*$', dia_preferido, re.IGNORECASE):
-                raise forms.ValidationError("El día preferido no es válido (solo letras).")
-        else:
-            raise forms.ValidationError("Día preferido: de 3 a 20 caracteres")
+        dia_preferido = self.cleaned_data.get('dia_preferido', '')
+        if not dia_preferido:
+            raise forms.ValidationError("El día preferido es obligatorio.")
         return dia_preferido
 
     def clean_fecha_solicitud(self):

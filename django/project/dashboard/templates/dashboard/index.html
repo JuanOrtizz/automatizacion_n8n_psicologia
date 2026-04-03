@@ -22,8 +22,8 @@
             </div>
         </div>
 
-        <div class="row mb-3">
-            <div class="col-6 d-flex align-items-center justify-content-start">
+        <div class="row mb-3 g-3">
+            <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-start">
                 <!--ACA VA EL FORM-->
                 <div class="input-group">
                     <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
@@ -35,8 +35,8 @@
                     </select>
                 </div>
             </div>
-            <div class="col-6 d-flex justify-content-end">
-                <a href="#" class="btn btn-success fw-bold">Agregar Nueva Sesión</a>
+            <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-end">
+                <a href="{% url 'register_sesion' %}" class="btn btn-success fw-bold">Agregar Nueva Sesión</a>
             </div>
 
         </div>
@@ -107,7 +107,6 @@
     </div>
 
 </section>
-
 
 <div id="loading-overlay">
     <p>Eliminando...</p>

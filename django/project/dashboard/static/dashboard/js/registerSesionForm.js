@@ -31,7 +31,7 @@ async function postForm(formData, csrfToken, form){
     // hago fetch del formulario
     try
     {
-        const response = await fetch("/register_sesion/",{
+        const response = await fetch("/registrar-sesion/",{
             method:"POST",
             body: formData,
             headers:{
@@ -42,12 +42,11 @@ async function postForm(formData, csrfToken, form){
         if(data.success){
             // vacio el formulario
             form.reset()
-            successAlertRedirect("¡Registro exitoso! Redirigiendo a Dashboard...")
+            successAlertRedirect("¡Registraste con éxito la sesión!")
         }else{
             const errors = data.errors //capturo los errores
             //Si los errores son string (provenientes de la vista)
             if (typeof errors === "string") {
-                console.error("Error en el Registro: ", errors)
                 errorAlert(data.errors)//Muestro una alerta
             }
             else{ // Sino (errores en formulario), muestro mediante un for estos errores provenientes de forms.py
@@ -61,7 +60,6 @@ async function postForm(formData, csrfToken, form){
             }
         }
     }catch(error){
-        console.error("Error en el Registro: ", error)
         errorAlert("Ocurrió un error inesperado. Intentá más tarde.")
     }
     finally {

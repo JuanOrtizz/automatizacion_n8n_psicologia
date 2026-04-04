@@ -1,12 +1,12 @@
 // funcion para generar alerta de exito
-export function successAlertRedirect(texto){
+export function successAlertRedirect(text){
     Swal.fire({
-        title: `${texto}`,
+        title: `${text}`,
         icon: "success",
-        iconColor: '#3366CC',
+        iconColor: '#12A116',
         showCancelButton: true,
         confirmButtonText: "Ir a Dashboard",
-        confirmButtonColor: '#000000',
+        confirmButtonColor: '#3366CC',
         cancelButtonText: "Cerrar",
         cancelButtonColor: '#FF0000',
         willOpen: () => {
@@ -27,9 +27,9 @@ export function successAlertRedirect(texto){
 }
 
 // funcion para generar alerta de error
-export function errorAlert(texto){
+export function errorAlert(text){
     Swal.fire({
-        title: `${texto}`,
+        title: `${text}`,
         icon: "error",
         iconColor: '#FF0000',
         confirmButtonText: "Cerrar",
@@ -47,11 +47,11 @@ export function errorAlert(texto){
     })
 }
 
-export function successAlert(texto){
+export function successAlert(text){
     Swal.fire({
-        title: `${texto}`,
+        title: `${text}`,
         icon: "success",
-        iconColor: '#90ee90',
+        iconColor: '#12A116',
         confirmButtonText: "Cerrar",
         confirmButtonColor: '#000000',
         willOpen: () => {
@@ -63,6 +63,28 @@ export function successAlert(texto){
             document.body.classList.remove('swal2-height-auto')
             document.body.style.overflow = 'auto'
             document.body.style.paddingRight = '0'
+        }
+    })
+}
+
+export function confirmAlert(text, action, callback){ // funcion para generar alerta de confirmacion
+    Swal.fire({ // Muestra alerta
+        title: `${text}`,
+        text: "No podrás revertir esto",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3366CC',
+        cancelButtonText: "Cerrar",
+        cancelButtonColor: '#FF0000',
+        confirmButtonText: `Sí ${action}`,
+        didOpen: () =>{ // agrego esto ya que sino recalcula con esta clase y sube el footer para evitar scroll
+            document.body.classList.remove('swal2-height-auto')
+            document.body.style.overflow = 'auto'
+            document.body.style.paddingRight = '0'
+        }
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            await callback()
         }
     })
 }

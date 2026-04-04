@@ -21,13 +21,13 @@ class SesionesForm(forms.Form):
     dia_preferido = forms.ChoiceField(
         choices=[
             ('', 'Selecciona un día'),
-            ('1', 'Lunes'),
-            ('2', 'Martes'),
-            ('3', 'Miércoles'),
-            ('4', 'Jueves'),
-            ('5', 'Viernes'),
-            ('6', 'Sábado'),
-            ('7', 'Domingo'),
+            ('Lunes', 'Lunes'),
+            ('Martes', 'Martes'),
+            ('Miércoles', 'Miércoles'),
+            ('Jueves', 'Jueves'),
+            ('Viernes', 'Viernes'),
+            ('Sábado', 'Sábado'),
+            ('Domingo', 'Domingo'),
         ],
         widget = Select(attrs={'id': 'id_dia_preferido', 'class': 'form-control'}),
     )

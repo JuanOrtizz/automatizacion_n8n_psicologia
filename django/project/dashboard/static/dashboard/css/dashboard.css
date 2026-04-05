@@ -1,0 +1,35 @@
+/* ID color (Table & Card)*/
+.id-color{
+    color: var(--primary-color) !important;
+}
+
+/*Table Design*/
+
+.table-color-primary{
+    border-radius: 5px 0;
+}
+
+.table-color-primary th{
+    color: var(--white) !important;
+    background-color: var(--secondary-color) !important;
+}
+
+.table-field-color td{
+    background-color: var(--white) !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.table-field-color:hover td{
+    background-color:var( --tertiary-color-hover) !important;
+}
+
+/* Card Design */
+.card-background-color{
+    background-color: var(--white) !important;
+    transition: background-color 0.2s ease !important;
+    border-color: var(--secondary-color) !important;
+}
+
+.card-background-color:hover{
+    background-color: var(--tertiary-color-hover) !important;
+}

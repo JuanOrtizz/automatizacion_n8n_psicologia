@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Panel de Administración | Automatización Chatbots {% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<section class="container-fluid d-flex justify-content-start align-items-center p-3">
+
+    <div class="container p-2">
+
+        <!-- Title -->
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="fw-bold fs-3">Panel de Sesiones</h2>
+            </div>
+        </div>
+
+        <div class="row mb-3 g-3">
+            <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-start">
+                <!--ACA VA EL FORM-->
+                <form method="GET" action="{% url 'dashboard' %}">
+                    <div class="input-group">
+                        <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
+                        <select id="filter-sesions" class="form-select" id="inputGroupSelect01" name="filter">
+                            <option value="" {% if not filter %}selected{% endif %}>Todas</option>
+                            <option value="1" {% if filter == "1" %}selected{% endif %}>Hoy</option>
+                            <option value="2" {% if filter == "2" %}selected{% endif %}>Mas antiguas</option>
+                            <option value="3" {% if filter == "3" %}selected{% endif %}>Mas Recientes</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-end">
+                <a href="{% url 'registrar-sesion' %}" class="btn btn-success fw-bold">Agregar Nueva Sesión</a>
+            </div>
+
+        </div>
+
+        <!-- TABLE (desktop) -->
+        <div class="row  d-none d-lg-block">
+            <div class="col-12">
+                <div class="table-responsive rounded-3 overflow-hidden shadow">
+                    <table class="table align-middle mb-0">
+                        <thead>
+                            <tr class="table-color-primary">
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Día Preferido</th>
+                                <th>Fecha de Solicitud</th>
+                                <th>Teléfono</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {% if sesions %}
+                                {% for s in sesions %}
+                                    <tr class="table-field-color sesion-item" id="sesion-{{ s.id }}">
+                                        <td scope="row" class="id-color fw-bold">{{ forloop.counter }}</td>
+                                        <td>{{ s.nombre }}</td>
+                                        <td>{{ s.dia_preferido }}</td>
+                                        <td>{{ s.fecha_solicitud }}</td>
+                                        <td class="text-break" style="max-width: 250px;">{{ s.telefono }}</td>
+                                        <td class="d-flex justify-content-start align-items-center gap-2" style="min-width: 150px;">
+                                            <a class="btn btn-sm btn-warning fw-bold" href="#">Modificar</a>
+                                            <form>
+                                                {% csrf_token %}
+                                                <button class="btn btn-sm btn-danger fw-bold btn-delete" data-id="{{ s.id }}">Eliminar</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {% if sesions %}
+            <!-- CARDS (mobile) -->
+            {% for s in sesions %}
+                <div class="d-block d-lg-none sesion-item" id="sesion-card-{{ s.id }}">
+                    <div class="card mb-3 shadow-sm rounded-3 border-info border-2">
+                        <div class="card-body rounded-3 card-background-color">
+                            <h5 class="card-title id-color">#{{ forloop.counter }}</h5>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <p class="mb-1"><strong>Nombre:</strong> {{ s.nombre }}</p>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <p class="mb-1"><strong>Día:</strong> {{ s.dia_preferido }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                     <p class="mb-1"><strong>Fecha:</strong> {{ s.fecha_solicitud }}</p>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <p class="mb-2"><strong>Teléfono:</strong> {{ s.telefono }}</p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2 justify-content-start flex-wrap">
+                                <a href="{% url 'modificar-sesion' s.id %}" class="btn btn-sm btn-warning fw-bold">Modificar</a>
+                                <form>
+                                    {% csrf_token %}
+                                    <button class="btn btn-sm btn-danger fw-bold btn-delete" data-id="{{ s.id }}">Eliminar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div id="no-sesions-message" class="alert alert-info text-center {% if sesions %}d-none{% endif %}">
+            No hay sesiones registradas.
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="{% static 'dashboard/js/showSuccessMessage.js' %}"></script>
+    <script type="module" src="{% static 'dashboard/js/deleteSesion.js' %}"></script>
+    <script src = "{% static 'dashboard/js/dashboardFilters.js' %}"></script>
+{% endblock %}

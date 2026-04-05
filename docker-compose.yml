@@ -5,7 +5,11 @@ services:
       - "8000:8000"
     volumes:
       - ./django/project:/app
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "sleep 5 && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+        - postgres
+    env_file:
+      - .env
 
   n8n:
     image: n8nio/n8n
@@ -14,5 +18,20 @@ services:
     volumes:
       - n8n_data:/home/node/.n8n
 
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_DJANGO}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+
 volumes:
   n8n_data:
+  postgres_data:

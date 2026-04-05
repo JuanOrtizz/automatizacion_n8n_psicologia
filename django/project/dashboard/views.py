@@ -58,6 +58,7 @@ def modificar_sesion(request, sesion_id):
 
     return render(request, 'dashboard/create_update_sesion.html', {'form': form, 'titulo_form': titulo_form, 'sesion_id': sesion_id})
 
+@login_required()
 def eliminar_sesion(request, sesion_id):
     if request.method == 'POST':
         try:

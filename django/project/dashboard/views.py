@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.timezone import now
 from .forms import SesionesForm
 from .services import register_sesion, get_sesion, get_sesions, update_sesion, delete_sesion
 
+@login_required
 def dashboard(request):
     filter = request.GET.get('filter', '')
     sesions = get_sesions()
@@ -17,6 +19,7 @@ def dashboard(request):
 
     return render(request, 'dashboard/index.html', {'sesions': sesions, 'filter' : filter})
 
+@login_required
 def registrar_sesion(request):
     titulo_form = "Registrar Sesión"
     if request.method == 'POST':
@@ -33,6 +36,7 @@ def registrar_sesion(request):
         form = SesionesForm()
     return render(request, 'dashboard/create_update_sesion.html', {'form': form, 'titulo_form': titulo_form})
 
+@login_required
 def modificar_sesion(request, sesion_id):
     titulo_form = "Modificar Sesión"
     sesion = get_sesion(sesion_id)

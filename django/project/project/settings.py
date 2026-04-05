@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
     #Own Apps
     'dashboard',
+    'accounts_auth',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+# Autenticación
+LOGIN_URL = '/accounts_auth/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts_auth/login/'

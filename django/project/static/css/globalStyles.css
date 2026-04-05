@@ -70,25 +70,25 @@ header nav ul div span{
     font-weight: bold;
 }
 
-header nav ul a{
-    text-decoration: none;
+header nav ul button{
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--secondary-color);
     padding:5px;
     border-radius: 5px;
+    border: none;
     box-sizing: border-box;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     transition: background-color 0.3s ease;
 }
 
-header nav ul a span{
+header nav ul button span{
     color: var(--white);
     font-size: 1.5rem !important;
 }
 
-header nav ul a:hover{
+header nav ul button:hover{
     background-color: var(--secondary-color-hover);
 }
 

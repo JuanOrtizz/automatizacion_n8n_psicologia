@@ -25,15 +25,17 @@
         <div class="row mb-3 g-3">
             <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-start">
                 <!--ACA VA EL FORM-->
-                <div class="input-group">
-                    <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
-                    <select class="form-select" id="inputGroupSelect01">
-                        <option selected>Todas</option>
-                        <option value="1">Más recientes</option>
-                        <option value="2">Mas antiguas</option>
-                        <option value="3">Hoy</option>
-                    </select>
-                </div>
+                <form method="GET" action="{% url 'dashboard' %}">
+                    <div class="input-group">
+                        <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
+                        <select id="filter-sesions" class="form-select" id="inputGroupSelect01" name="filter">
+                            <option value="" {% if not filter %}selected{% endif %}>Todas</option>
+                            <option value="1" {% if filter == "1" %}selected{% endif %}>Hoy</option>
+                            <option value="2" {% if filter == "2" %}selected{% endif %}>Mas antiguas</option>
+                            <option value="3" {% if filter == "3" %}selected{% endif %}>Mas Recientes</option>
+                        </select>
+                    </div>
+                </form>
             </div>
             <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-end">
                 <a href="{% url 'registrar-sesion' %}" class="btn btn-success fw-bold">Agregar Nueva Sesión</a>
@@ -127,6 +129,7 @@
 
 {% block extra_js %}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="module" src="{% static 'dashboard/js/index.js' %}"></script>
+    <script type="module" src="{% static 'dashboard/js/showSuccessMessage.js' %}"></script>
     <script type="module" src="{% static 'dashboard/js/deleteSesion.js' %}"></script>
+    <script src = "{% static 'dashboard/js/dashboardFilters.js' %}"></script>
 {% endblock %}

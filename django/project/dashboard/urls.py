@@ -6,8 +6,5 @@ urlpatterns= [
     path('registrar-sesion/', views.registrar_sesion, name='registrar-sesion'),
     path('modificar-sesion/<int:sesion_id>/', views.modificar_sesion, name='modificar-sesion'),
     path('eliminar-sesion/<int:sesion_id>/', views.eliminar_sesion, name='eliminar-sesion'),
-]
-
-urlpatterns += [
     path('api/v1/', include('dashboard.api.v1.urls')),
 ]

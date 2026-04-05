@@ -68,7 +68,7 @@ export function successAlert(text){
 }
 
 export function confirmAlert(text, action, callback){ // funcion para generar alerta de confirmacion
-    Swal.fire({ // Muestra alerta
+    Swal.fire({
         title: `${text}`,
         text: "No podrás revertir esto",
         icon: "warning",

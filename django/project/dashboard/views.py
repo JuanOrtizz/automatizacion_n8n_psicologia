@@ -1,14 +1,21 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.utils.timezone import now
 from .forms import SesionesForm
-from .models import Sesiones
 from .services import register_sesion, get_sesion, get_sesions, update_sesion, delete_sesion
 
-
 def dashboard(request):
-    #Agregar filtros
+    filter = request.GET.get('filter', '')
     sesions = get_sesions()
-    return render(request, 'dashboard/index.html', {'sesions': sesions})
+    match filter:
+        case "1": #Dia de hoy
+            sesions = sesions.filter(fecha_solicitud = now().date())
+        case "2": # Mas antiguas
+            sesions = sesions.order_by('fecha_solicitud')
+        case "3": # Mas recientes
+            sesions = sesions.order_by('-fecha_solicitud')
+
+    return render(request, 'dashboard/index.html', {'sesions': sesions, 'filter' : filter})
 
 def registrar_sesion(request):
     titulo_form = "Registrar Sesión"

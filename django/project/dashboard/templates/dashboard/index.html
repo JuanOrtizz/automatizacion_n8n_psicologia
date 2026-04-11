@@ -25,19 +25,32 @@
         <div class="row mb-3 g-3">
             <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-start">
                 <!--ACA VA EL FORM-->
-                <form method="GET" action="{% url 'dashboard' %}">
+                <form method="GET" action="{% url 'dashboard' %}" class="d-flex flex-column flex-m-row align-items-center gap-2">
                     <div class="input-group">
-                        <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
-                        <select id="filter-sessions" class="form-select" id="inputGroupSelect01" name="filter_state">
-                            <option value="" {% if not filter_state %}selected{% endif %}>Todas</option>
-                            <option value="1" {% if filter_state == "1" %}selected{% endif %}>Hoy</option>
-                            <option value="2" {% if filter_state == "2" %}selected{% endif %}>Mas antiguas</option>
-                            <option value="3" {% if filter_state == "3" %}selected{% endif %}>Mas Recientes</option>
+                        <label class="input-group-text filter fw-bold" for="inputGroupSelect01">Filtro por día registrado</label>
+                        <select id="filter-fecha-registro" class="form-select" id="inputGroupSelect01" name="filter_fecha_registro">
+                            <option value="" {% if not filter_fecha_registro %}selected{% endif %}>Todas</option>
+                            <option value="1" {% if filter_fecha_registro == "1" %}selected{% endif %}>Hoy</option>
+                            <option value="2" {% if filter_fecha_registro == "2" %}selected{% endif %}>Mas antiguas</option>
+                            <option value="3" {% if filter_fecha_registro == "3" %}selected{% endif %}>Mas Recientes</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-group-text filter fw-bold" for="inputGroupSelect02">Filtro por dia sesión</label>
+                        <select id="filter-dia-sesion" class="form-select" id="inputGroupSelect02" name="filter_dia_sesion">
+                            <option value="" {% if not filter_dia_sesion %}selected{% endif %}>Todos</option>
+                            <option value="Lunes" {% if filter_dia_sesion == "Lunes" %}selected{% endif %}>Lunes</option>
+                            <option value="Martes" {% if filter_dia_sesion == "Martes" %}selected{% endif %}>Martes</option>
+                            <option value="Miércoles" {% if filter_dia_sesion == "Miércoles" %}selected{% endif %}>Miércoles</option>
+                            <option value="Jueves" {% if filter_dia_sesion == "Jueves" %}selected{% endif %}>Jueves</option>
+                            <option value="Viernes" {% if filter_dia_sesion == "Viernes" %}selected{% endif %}>Viernes</option>
+                            <option value="Sábado" {% if filter_dia_sesion == "Sábado" %}selected{% endif %}>Sábado</option>
+                            <option value="Domingo" {% if filter_dia_sesion == "Domingo" %}selected{% endif %}>Domingo</option>
                         </select>
                     </div>
                 </form>
             </div>
-            <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-end">
+            <div class="col-12 col-lg-6 d-flex align-items-start justify-content-center justify-content-lg-end">
                 <a href="{% url 'registrar-sesion' %}" class="btn btn-success fw-bold">Agregar Nueva Sesión</a>
             </div>
 
@@ -142,6 +155,6 @@
 {% block extra_js %}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="{% static 'dashboard/js/showSuccessMessage.js' %}"></script>
-    <script type="module" src="{% static 'dashboard/js/deleteSesion.js' %}"></script>
+    <script type="module" src="{% static 'dashboard/js/deleteSession.js' %}"></script>
     <script src = "{% static 'dashboard/js/dashboardFilters.js' %}"></script>
 {% endblock %}

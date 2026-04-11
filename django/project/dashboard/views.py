@@ -7,9 +7,15 @@ from .services import register_session, get_session, get_sessions, update_sessio
 
 @login_required
 def dashboard(request):
-    filter_state = request.GET.get('filter_state', '')
-    sessions = get_sessions()
-    match filter_state:
+    filter_fecha_registro = request .GET.get('filter_fecha_registro', '')
+    filter_dia_sesion = request.GET.get('filter_dia_sesion', '')
+
+    if filter_dia_sesion == "":
+        sessions = get_sessions()
+    else:
+        sessions = get_sessions().filter(dia_sesion=filter_dia_sesion)
+
+    match filter_fecha_registro:
         case "1": #Dia de hoy
             sessions = sessions.filter(fecha_solicitud = now().date())
         case "2": # Mas antiguas
@@ -17,7 +23,7 @@ def dashboard(request):
         case "3": # Mas recientes
             sessions = sessions.order_by('-fecha_solicitud')
 
-    return render(request, 'dashboard/index.html', {'sessions': sessions, 'filter_state' : filter_state})
+    return render(request, 'dashboard/index.html', {'sessions': sessions, 'filter_fecha_registro': filter_fecha_registro,'filter_dia_sesion' : filter_dia_sesion})
 
 @login_required
 def registrar_sesion(request):

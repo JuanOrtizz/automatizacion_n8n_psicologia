@@ -41,8 +41,8 @@ async function deleteForm(sesionId, csrfToken, btn) {
                 console.log(elements.length)
                 // Verificar si ya no queda ninguno
                 if (elements.length === 0) {
-                    const containerNoSesions = document.getElementById("no-sesions-message")
-                    containerNoSesions.classList.remove("d-none")
+                    const containerNoSessions = document.getElementById("no-sessions-message")
+                    containerNoSessions.classList.remove("d-none")
                 }
 
             }

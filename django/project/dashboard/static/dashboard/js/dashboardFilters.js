@@ -1,6 +1,13 @@
 document.addEventListener('DOMContentLoaded', ()=>{
-    const selectFilter = document.getElementById("filter-sessions")
-    selectFilter.addEventListener('change',()=>{
-        selectFilter.form.submit()
+    const selectFilterFechaRegistro = document.getElementById("filter-fecha-registro")
+    const selectFilterDiaSesion = document.getElementById("filter-dia-sesion")
+
+   selectFilterFechaRegistro.addEventListener('change', () => {
+        selectFilterFechaRegistro.form.submit()
     })
+
+    selectFilterDiaSesion.addEventListener('change', () => {
+        selectFilterDiaSesion.form.submit()
+    })
+
 })

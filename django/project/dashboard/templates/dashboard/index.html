@@ -28,11 +28,11 @@
                 <form method="GET" action="{% url 'dashboard' %}">
                     <div class="input-group">
                         <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
-                        <select id="filter-sesions" class="form-select" id="inputGroupSelect01" name="filter">
-                            <option value="" {% if not filter %}selected{% endif %}>Todas</option>
-                            <option value="1" {% if filter == "1" %}selected{% endif %}>Hoy</option>
-                            <option value="2" {% if filter == "2" %}selected{% endif %}>Mas antiguas</option>
-                            <option value="3" {% if filter == "3" %}selected{% endif %}>Mas Recientes</option>
+                        <select id="filter-sessions" class="form-select" id="inputGroupSelect01" name="filter_state">
+                            <option value="" {% if not filter_state %}selected{% endif %}>Todas</option>
+                            <option value="1" {% if filter_state == "1" %}selected{% endif %}>Hoy</option>
+                            <option value="2" {% if filter_state == "2" %}selected{% endif %}>Mas antiguas</option>
+                            <option value="3" {% if filter_state == "3" %}selected{% endif %}>Mas Recientes</option>
                         </select>
                     </div>
                 </form>
@@ -54,21 +54,25 @@
                                 <th>Nombre</th>
                                 <th>Día Preferido</th>
                                 <th>Fecha de Solicitud</th>
+                                <th>Dia Sesión</th>
+                                <th>Horario Sesión</th>
                                 <th>Teléfono</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
-                            {% if sesions %}
-                                {% for s in sesions %}
+                            {% if sessions %}
+                                {% for s in sessions %}
                                     <tr class="table-field-color sesion-item" id="sesion-{{ s.id }}">
                                         <td scope="row" class="id-color fw-bold">{{ forloop.counter }}</td>
                                         <td>{{ s.nombre }}</td>
                                         <td>{{ s.dia_preferido }}</td>
                                         <td>{{ s.fecha_solicitud }}</td>
+                                        <td>{{ s.dia_sesion }}</td>
+                                        <td>{{ s.horario_sesion }}</td>
                                         <td class="text-break" style="max-width: 250px;">{{ s.telefono }}</td>
                                         <td class="d-flex justify-content-start align-items-center gap-2" style="min-width: 150px;">
-                                            <a class="btn btn-sm btn-warning fw-bold" href="#">Modificar</a>
+                                            <a class="btn btn-sm btn-warning fw-bold" href="{% url 'modificar-sesion' s.id%}">Modificar</a>
                                             <form>
                                                 {% csrf_token %}
                                                 <button class="btn btn-sm btn-danger fw-bold btn-delete" data-id="{{ s.id }}">Eliminar</button>
@@ -83,9 +87,9 @@
             </div>
         </div>
 
-        {% if sesions %}
+        {% if sessions %}
             <!-- CARDS (mobile) -->
-            {% for s in sesions %}
+            {% for s in sessions %}
                 <div class="d-block d-lg-none sesion-item" id="sesion-card-{{ s.id }}">
                     <div class="card mb-3 shadow-sm rounded-3 border-info border-2">
                         <div class="card-body rounded-3 card-background-color">
@@ -95,15 +99,23 @@
                                     <p class="mb-1"><strong>Nombre:</strong> {{ s.nombre }}</p>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <p class="mb-1"><strong>Día:</strong> {{ s.dia_preferido }}</p>
+                                    <p class="mb-1"><strong>Día Preferido:</strong> {{ s.dia_preferido }}</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-6">
-                                     <p class="mb-1"><strong>Fecha:</strong> {{ s.fecha_solicitud }}</p>
+                                     <p class="mb-1"><strong>Fecha Solicitud:</strong> {{ s.fecha_solicitud }}</p>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <p class="mb-2"><strong>Teléfono:</strong> {{ s.telefono }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                     <p class="mb-1"><strong>Dia Sesion:</strong> {{ s.dia_sesion }}</p>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <p class="mb-2"><strong>Horario:</strong> {{ s.horario_sesion }}</p>
                                 </div>
                             </div>
 
@@ -119,7 +131,7 @@
                 </div>
             {% endfor %}
         {% endif %}
-        <div id="no-sesions-message" class="alert alert-info text-center {% if sesions %}d-none{% endif %}">
+        <div id="no-sessions-message" class="alert alert-info text-center {% if sessions %}d-none{% endif %}">
             No hay sesiones registradas.
         </div>
     </div>

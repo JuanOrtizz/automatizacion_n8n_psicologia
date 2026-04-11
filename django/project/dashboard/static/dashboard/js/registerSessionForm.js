@@ -1,4 +1,4 @@
-import {validateForm, textErrorInput} from './sesionValidations.js'
+import {validateForm, textErrorInput} from './sessionValidations.js'
 import {successAlertRedirect, errorAlert} from './alerts.js'
 
 document.addEventListener('DOMContentLoaded', ()=>{

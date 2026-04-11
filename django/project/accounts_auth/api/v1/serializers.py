@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-
+from ...models import UsuariosAutorizados
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,5 +11,10 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
-    def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+    def validate_email(self, attrs):
+        email = attrs.get('email', '').lower()
+        if not UsuariosAutorizados.objects.filter(email__iexact=email).exists():
+            raise serializers.ValidationError("Email no autorizado")
+        if User.objects.filter(email__iexact=email).exists():
+            raise serializers.ValidationError("Email ya registrado")
+        return attrs

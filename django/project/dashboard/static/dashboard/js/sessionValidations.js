@@ -45,7 +45,7 @@ export function validateForm(formData){
 // Validaciones propias para cada campo
 // validar input nombre
 function validateInputNombre(input, valor){
-    const patron = ^[a-zA-ZáéíóúñÁÉÍÓÚÑ]+(?:\s[a-zA-ZáéíóúñÁÉÍÓÚÑ]+)*$ // verifica si es un nombre con solo letras Upper y Lower y espacios
+   const patron = /^[a-zA-ZáéíóúñÁÉÍÓÚÑ]+(?:\s[a-zA-ZáéíóúñÁÉÍÓÚÑ]+)*$/
     if(valor.length >= 2 && valor.length <= 100){
         if (!patron.test(valor)){
             textErrorInput(input, "El nombre no es válido")

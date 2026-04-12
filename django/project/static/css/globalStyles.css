@@ -1,0 +1,120 @@
+/* Colors */
+:root {
+    --primary-color: #00CCFF;
+    --secondary-color: #3399FF;
+    --tertiary-color:#66FFFF;
+    --primary-color-hover:#0066FF;
+    --secondary-color-hover:#3366CC;
+    --tertiary-color-hover:#99FFFF ;
+    --black: #000000;
+    --white: #ffffff;
+    --
+}
+
+/* General Design (Body and Main) */
+body {
+    font-family: Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Header Design */
+header{
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 0 20px;
+    text-align: center;
+}
+
+header nav{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+header nav ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin: 0 !important;
+    padding: 15px;
+}
+
+header nav ul div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#icon{
+    font-size:2rem !important;
+}
+
+header nav ul div span{
+    font-weight: bold;
+}
+
+header nav ul button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    padding:5px;
+    border-radius: 5px;
+    border: none;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+}
+
+header nav ul button span{
+    color: var(--white);
+    font-size: 1.5rem !important;
+}
+
+header nav ul button:hover{
+    background-color: var(--secondary-color-hover);
+}
+
+/* Footer Design */
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#footer-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    gap: 5px;
+    padding:10px;
+    box-sizing: border-box;
+}
+
+#footer-container p {
+    margin: 0;
+    font-size: 0.9rem;
+    text-align: center;
+}

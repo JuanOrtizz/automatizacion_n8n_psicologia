@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    {% if titulo_form == 'Registrar Sesión' %}
+        Registrar Sesión | Automatización Chatbots
+    {% elif titulo_form == 'Modificar Sesión' %}
+        Modificar Sesión | Automatización Chatbots
+    {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<section class="container-fluid d-flex justify-content-start align-items-center gap-4 flex-column">
+    <div class="container-fluid d-flex justify-content-start align-items-start">
+        <div class="row">
+            <div class="col p-0">
+                <a href="{% url 'dashboard' %}" class="btn btn-sm btn-info fw-bold text-white d-flex justify-content-center align-items-center">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container p-3 bg-light rounded-3 shadow">
+        <div class="row mb-3">
+            <div class="col-12 text-center">
+                <h2 class="fw-bold fs-3">{{ titulo_form }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <form method="post"
+                      action="
+                        {% if titulo_form == 'Modificar Sesión' %}
+                            {% url 'modificar-sesion' sesion_id %}
+                        {% else %}
+                            {% url 'registrar-sesion' %}
+                        {% endif %}
+                        "
+                      id="form"
+                      novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="input-group has-validation">
+                            <div class="form-floating mb-3">
+                                {{ field }}
+                                <label for="{{ field.widget.attrs.id }}">{{ field.label }}</label>
+                                <div class="invalid-feedback" id="{{ field.name }}-error"></div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <button class="btn btn-success fw-bold w-100" type="submit" id="btn-submit">
+                         <span class="btn-text" id="btn-text">
+                                 {% if titulo_form == 'Registrar Sesión' %}
+                                    Registrar Sesión
+                                {% elif titulo_form == 'Modificar Sesión' %}
+                                    Modificar Sesión
+                                {% endif %}
+                         </span>
+                        <span class="spinner-border spinner-border-sm d-none" role="status" id="btn-spinner"></span>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% if titulo_form == 'Registrar Sesión' %}
+        <script type="module" src="{% static 'dashboard/js/registerSessionForm.js' %}"></script>
+    {% elif titulo_form == 'Modificar Sesión' %}
+        <script type="module" src="{% static 'dashboard/js/updateSessionForm.js' %}"></script>
+    {% endif %}
+{% endblock %}

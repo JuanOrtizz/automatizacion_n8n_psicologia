@@ -5,7 +5,11 @@ services:
       - "8000:8000"
     volumes:
       - ./django/project:/app
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "sleep 5 && python manage.py migrate && python manage.py createsuperuser --noinput || true && python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+        - postgres
+    env_file:
+      - .env
 
   n8n:
     image: n8nio/n8n
@@ -13,6 +17,41 @@ services:
       - "5678:5678"
     volumes:
       - n8n_data:/home/node/.n8n
+    environment:
+      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
+      N8N_BASIC_AUTH_ACTIVE: ${N8N_BASIC_AUTH_ACTIVE}
+      N8N_BASIC_AUTH_USER: ${N8N_BASIC_AUTH_USER}
+      N8N_BASIC_AUTH_PASSWORD: ${N8N_BASIC_AUTH_PASSWORD}
+      WEBHOOK_URL: ${WEBHOOK_URL} 
+      N8N_HOST: ${N8N_HOST}
+      N8N_PROTOCOL: ${N8N_PROTOCOL}
+    env_file:
+      - .env
+
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_DJANGO}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+  ngrok:
+    image: ngrok/ngrok
+    depends_on:
+      - n8n
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    command: http n8n:5678 --log=stdout
+    env_file:
+      - .env
 
 volumes:
   n8n_data:
+  postgres_data:

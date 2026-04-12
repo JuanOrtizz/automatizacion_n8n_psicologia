@@ -1,0 +1,24 @@
+<header>
+    <nav>
+        <ul>
+            <li>
+                <div>
+                    <span class="material-symbols-outlined" id="icon">dashboard</span>
+                    <span>Dashboard Web Sesiones</span>
+                </div>
+            </li>
+            {% if user.is_authenticated %}
+            <li>
+                <div>
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="cerrar_sesion">
+                            <span class="material-symbols-outlined">exit_to_app</span>
+                        </button>
+                    </form>
+                </div>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>

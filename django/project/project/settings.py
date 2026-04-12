@@ -158,9 +158,9 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.AnonRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '100/day',
-        'login': '5/minute',
-        'register': '5/hour',
+        'anon': os.getenv("ANON_RATE", "100/day"),
+        'login': os.getenv("LOGIN_RATE", "5/minute"),
+        'register': os.getenv("REGISTER_RATE", "5/hour"),
     },
 }
 

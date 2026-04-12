@@ -3,9 +3,8 @@ from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
-from ....project.throttles import LoginAnonRateThrottle, RegisterAnonRateThrottle
+from project.throttles import LoginAnonRateThrottle, RegisterAnonRateThrottle
 from .serializers import UserSerializer
-
 
 class UserViewSet(viewsets.GenericViewSet):
     serializer_class = UserSerializer

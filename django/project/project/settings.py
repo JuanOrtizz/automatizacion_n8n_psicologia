@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     #Own Apps
     'dashboard',
     'accounts_auth',
@@ -151,7 +152,7 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '100/day',
         'login': '5/minute',
-        'register': '3/hour',
+        'register': '5/hour',
     },
 }
 

@@ -25,19 +25,32 @@
         <div class="row mb-3 g-3">
             <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-start">
                 <!--ACA VA EL FORM-->
-                <form method="GET" action="{% url 'dashboard' %}">
+                <form method="GET" action="{% url 'dashboard' %}" class="d-flex flex-column flex-m-row align-items-center gap-2">
                     <div class="input-group">
-                        <label class="input-group-text" for="inputGroupSelect01">Filtro</label>
-                        <select id="filter-sesions" class="form-select" id="inputGroupSelect01" name="filter">
-                            <option value="" {% if not filter %}selected{% endif %}>Todas</option>
-                            <option value="1" {% if filter == "1" %}selected{% endif %}>Hoy</option>
-                            <option value="2" {% if filter == "2" %}selected{% endif %}>Mas antiguas</option>
-                            <option value="3" {% if filter == "3" %}selected{% endif %}>Mas Recientes</option>
+                        <label class="input-group-text filter fw-bold" for="inputGroupSelect01">Filtro por día registrado</label>
+                        <select id="filter-fecha-registro" class="form-select" id="inputGroupSelect01" name="filter_fecha_registro">
+                            <option value="" {% if not filter_fecha_registro %}selected{% endif %}>Todas</option>
+                            <option value="1" {% if filter_fecha_registro == "1" %}selected{% endif %}>Hoy</option>
+                            <option value="2" {% if filter_fecha_registro == "2" %}selected{% endif %}>Mas antiguas</option>
+                            <option value="3" {% if filter_fecha_registro == "3" %}selected{% endif %}>Mas Recientes</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-group-text filter fw-bold" for="inputGroupSelect02">Filtro por dia sesión</label>
+                        <select id="filter-dia-sesion" class="form-select" id="inputGroupSelect02" name="filter_dia_sesion">
+                            <option value="" {% if not filter_dia_sesion %}selected{% endif %}>Todos</option>
+                            <option value="Lunes" {% if filter_dia_sesion == "Lunes" %}selected{% endif %}>Lunes</option>
+                            <option value="Martes" {% if filter_dia_sesion == "Martes" %}selected{% endif %}>Martes</option>
+                            <option value="Miércoles" {% if filter_dia_sesion == "Miércoles" %}selected{% endif %}>Miércoles</option>
+                            <option value="Jueves" {% if filter_dia_sesion == "Jueves" %}selected{% endif %}>Jueves</option>
+                            <option value="Viernes" {% if filter_dia_sesion == "Viernes" %}selected{% endif %}>Viernes</option>
+                            <option value="Sábado" {% if filter_dia_sesion == "Sábado" %}selected{% endif %}>Sábado</option>
+                            <option value="Domingo" {% if filter_dia_sesion == "Domingo" %}selected{% endif %}>Domingo</option>
                         </select>
                     </div>
                 </form>
             </div>
-            <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-end">
+            <div class="col-12 col-lg-6 d-flex align-items-start justify-content-center justify-content-lg-end">
                 <a href="{% url 'registrar-sesion' %}" class="btn btn-success fw-bold">Agregar Nueva Sesión</a>
             </div>
 
@@ -54,21 +67,25 @@
                                 <th>Nombre</th>
                                 <th>Día Preferido</th>
                                 <th>Fecha de Solicitud</th>
+                                <th>Dia Sesión</th>
+                                <th>Horario Sesión</th>
                                 <th>Teléfono</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
-                            {% if sesions %}
-                                {% for s in sesions %}
+                            {% if sessions %}
+                                {% for s in sessions %}
                                     <tr class="table-field-color sesion-item" id="sesion-{{ s.id }}">
                                         <td scope="row" class="id-color fw-bold">{{ forloop.counter }}</td>
                                         <td>{{ s.nombre }}</td>
                                         <td>{{ s.dia_preferido }}</td>
                                         <td>{{ s.fecha_solicitud }}</td>
+                                        <td>{% if s.dia_sesion == None %} No elegido {% else %} {{ s.dia_sesion }} {% endif %}</td>
+                                        <td>{% if s.horario_sesion == None %} No elegido {% else %} {{ s.horario_sesion }} {% endif %}</td>
                                         <td class="text-break" style="max-width: 250px;">{{ s.telefono }}</td>
                                         <td class="d-flex justify-content-start align-items-center gap-2" style="min-width: 150px;">
-                                            <a class="btn btn-sm btn-warning fw-bold" href="#">Modificar</a>
+                                            <a class="btn btn-sm btn-warning fw-bold" href="{% url 'modificar-sesion' s.id%}">Modificar</a>
                                             <form>
                                                 {% csrf_token %}
                                                 <button class="btn btn-sm btn-danger fw-bold btn-delete" data-id="{{ s.id }}">Eliminar</button>
@@ -83,9 +100,9 @@
             </div>
         </div>
 
-        {% if sesions %}
+        {% if sessions %}
             <!-- CARDS (mobile) -->
-            {% for s in sesions %}
+            {% for s in sessions %}
                 <div class="d-block d-lg-none sesion-item" id="sesion-card-{{ s.id }}">
                     <div class="card mb-3 shadow-sm rounded-3 border-info border-2">
                         <div class="card-body rounded-3 card-background-color">
@@ -95,15 +112,23 @@
                                     <p class="mb-1"><strong>Nombre:</strong> {{ s.nombre }}</p>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <p class="mb-1"><strong>Día:</strong> {{ s.dia_preferido }}</p>
+                                    <p class="mb-1"><strong>Día Preferido:</strong> {{ s.dia_preferido }}</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-6">
-                                     <p class="mb-1"><strong>Fecha:</strong> {{ s.fecha_solicitud }}</p>
+                                     <p class="mb-1"><strong>Fecha Solicitud:</strong> {{ s.fecha_solicitud }}</p>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <p class="mb-2"><strong>Teléfono:</strong> {{ s.telefono }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                     <p class="mb-1"><strong>Dia Sesion:</strong> {% if s.dia_sesion == None %} No elegido {% else %} {{ s.dia_sesion }} {% endif %}</p>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <p class="mb-2"><strong>Horario:</strong> {% if s.horario_sesion == None %} No elegido {% else %} {{ s.horario_sesion }} {% endif %}</p>
                                 </div>
                             </div>
 
@@ -119,7 +144,7 @@
                 </div>
             {% endfor %}
         {% endif %}
-        <div id="no-sesions-message" class="alert alert-info text-center {% if sesions %}d-none{% endif %}">
+        <div id="no-sessions-message" class="alert alert-info text-center {% if sessions %}d-none{% endif %}">
             No hay sesiones registradas.
         </div>
     </div>
@@ -130,6 +155,6 @@
 {% block extra_js %}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="{% static 'dashboard/js/showSuccessMessage.js' %}"></script>
-    <script type="module" src="{% static 'dashboard/js/deleteSesion.js' %}"></script>
+    <script type="module" src="{% static 'dashboard/js/deleteSession.js' %}"></script>
     <script src = "{% static 'dashboard/js/dashboardFilters.js' %}"></script>
 {% endblock %}

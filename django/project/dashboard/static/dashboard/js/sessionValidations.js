@@ -23,18 +23,20 @@ export function validateForm(formData){
         }
 
         valor = valor.trim()
-        if(!valor){
-            textErrorInput(input, "El campo está vacío")
-            isValid = false
-        }
-        else if (llave === "nombre"){
-            if(!validateInputNombre(input, valor)) isValid = false
-        }
-        else if (llave === "dia_preferido"){
-            if(!validateSelectDiaPreferido(input, valor)) isValid = false
-        }
-        else if (llave === "telefono"){
-            if(!validateInputTelefono(input, valor)) isValid = false
+        if( llave !== "dia_sesion" && llave !== "horario_sesion"){
+            if(!valor){
+                textErrorInput(input, "El campo está vacío")
+                isValid = false
+            }
+            else if (llave === "nombre"){
+                if(!validateInputNombre(input, valor)) isValid = false
+            }
+            else if (llave === "dia_preferido"){
+                if(!validateSelectDiaPreferido(input, valor)) isValid = false
+            }
+            else if (llave === "telefono"){
+                if(!validateInputTelefono(input, valor)) isValid = false
+            }
         }
     }
     return isValid
@@ -43,7 +45,7 @@ export function validateForm(formData){
 // Validaciones propias para cada campo
 // validar input nombre
 function validateInputNombre(input, valor){
-    const patron = /^[a-záéíóúñ]+(?:\s[a-záéíóúñ]+)*$/i // verifica si es un nombre con solo letras Upper y Lower y espacios
+   const patron = /^[a-zA-ZáéíóúñÁÉÍÓÚÑ]+(?:\s[a-zA-ZáéíóúñÁÉÍÓÚÑ]+)*$/
     if(valor.length >= 2 && valor.length <= 100){
         if (!patron.test(valor)){
             textErrorInput(input, "El nombre no es válido")
@@ -69,7 +71,7 @@ function validateSelectDiaPreferido(input, valor){
 
 //validar input telefono
 function validateInputTelefono(input, valor){
-    const patron =  /^\+?[0-9]{6,25}$/ // verifica si es un celular valido
+    const patron = /^\+?[0-9\s-]{6,25}$/ // verifica si es un celular valido
     if(valor.length >= 6 && valor.length <= 25){
         if (!patron.test(valor)){
             textErrorInput(input, "El celular no es válido")

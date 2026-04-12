@@ -77,8 +77,8 @@
 {% block extra_js %}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {% if titulo_form == 'Registrar Sesión' %}
-        <script type="module" src="{% static 'dashboard/js/registerSesionForm.js' %}"></script>
+        <script type="module" src="{% static 'dashboard/js/registerSessionForm.js' %}"></script>
     {% elif titulo_form == 'Modificar Sesión' %}
-        <script type="module" src="{% static 'dashboard/js/updateSesionForm.js' %}"></script>
+        <script type="module" src="{% static 'dashboard/js/updateSessionForm.js' %}"></script>
     {% endif %}
 {% endblock %}

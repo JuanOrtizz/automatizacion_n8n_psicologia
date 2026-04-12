@@ -33,3 +33,9 @@
 .card-background-color:hover{
     background-color: var(--tertiary-color-hover) !important;
 }
+
+/* Filters */
+.filter{
+    background-color: var(--primary-color-hover) !important;
+    color: var(--white) !important;
+}

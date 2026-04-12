@@ -1,5 +1,5 @@
-import {validateForm, textErrorInput} from './sesionValidations.js'
-import {successAlertRedirect, errorAlert} from './alerts.js'
+import {validateForm, textErrorInput} from './sessionValidations.js'
+import {successAlertRedirect, errorAlert, confirmAlert} from './alerts.js'
 
 document.addEventListener('DOMContentLoaded', ()=>{
     // capturo el formulario y el token
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         const formData = new FormData(form)
         // valida los campos del formulario, si son validos, hace el post del formulario
         if(validateForm(formData)){
-            postForm(formData, csrfToken, form)
+            confirmAlert("¿Estás seguro que querés modificar esta sesión?", "Modificar", () => postForm(formData, csrfToken, form))
         }
     })
 })
@@ -31,7 +31,7 @@ async function postForm(formData, csrfToken, form){
     // hago fetch del formulario
     try
     {
-        const response = await fetch("/registrar-sesion/",{
+        const response = await fetch(form.action,{
             method:"POST",
             body: formData,
             headers:{
@@ -40,9 +40,8 @@ async function postForm(formData, csrfToken, form){
         })
         const data = await response.json()
         if(data.success){
-            // vacio el formulario
-            form.reset()
-            successAlertRedirect("¡Registraste con éxito la sesión!")
+            sessionStorage.setItem('msgSuccess', data.message)
+            window.location.href = "/"
         }else{
             const errors = data.errors //capturo los errores
             //Si los errores son string (provenientes de la vista)
@@ -64,7 +63,7 @@ async function postForm(formData, csrfToken, form){
     }
     finally {
         btnSubmit.disabled = false
-        text.textContent = "Registrar Sesión"
+        text.textContent = "Modificar Sesión"
         spinner.classList.add("d-none")
     }
 }

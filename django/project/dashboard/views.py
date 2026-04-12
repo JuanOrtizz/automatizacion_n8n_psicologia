@@ -3,21 +3,27 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.timezone import now
 from .forms import SesionesForm
-from .services import register_sesion, get_sesion, get_sesions, update_sesion, delete_sesion
+from .services import register_session, get_session, get_sessions, update_session, delete_session
 
 @login_required
 def dashboard(request):
-    filter = request.GET.get('filter', '')
-    sesions = get_sesions()
-    match filter:
-        case "1": #Dia de hoy
-            sesions = sesions.filter(fecha_solicitud = now().date())
-        case "2": # Mas antiguas
-            sesions = sesions.order_by('fecha_solicitud')
-        case "3": # Mas recientes
-            sesions = sesions.order_by('-fecha_solicitud')
+    filter_fecha_registro = request .GET.get('filter_fecha_registro', '')
+    filter_dia_sesion = request.GET.get('filter_dia_sesion', '')
 
-    return render(request, 'dashboard/index.html', {'sesions': sesions, 'filter' : filter})
+    if filter_dia_sesion == "":
+        sessions = get_sessions()
+    else:
+        sessions = get_sessions().filter(dia_sesion=filter_dia_sesion)
+
+    match filter_fecha_registro:
+        case "1": #Dia de hoy
+            sessions = sessions.filter(fecha_solicitud = now().date())
+        case "2": # Mas antiguas
+            sessions = sessions.order_by('fecha_solicitud')
+        case "3": # Mas recientes
+            sessions = sessions.order_by('-fecha_solicitud')
+
+    return render(request, 'dashboard/index.html', {'sessions': sessions, 'filter_fecha_registro': filter_fecha_registro,'filter_dia_sesion' : filter_dia_sesion})
 
 @login_required
 def registrar_sesion(request):
@@ -26,7 +32,7 @@ def registrar_sesion(request):
         form = SesionesForm(request.POST)
         if form.is_valid():
             try:
-                register_sesion(form.cleaned_data)
+                register_session(form.cleaned_data)
                 return JsonResponse({'success': True, 'message': 'Sesión registrada con éxito'})
             except ValueError as e:
                 return JsonResponse({'success': False, 'errors': str(e)})
@@ -39,12 +45,12 @@ def registrar_sesion(request):
 @login_required
 def modificar_sesion(request, sesion_id):
     titulo_form = "Modificar Sesión"
-    sesion = get_sesion(sesion_id)
+    sesion = get_session(sesion_id)
     if request.method == 'POST':
         form = SesionesForm(request.POST)
         if form.is_valid():
             try:
-                update_sesion(sesion, form.cleaned_data)
+                update_session(sesion, form.cleaned_data)
                 return JsonResponse({'success': True, 'message': 'Sesión modificada con éxito'})
             except ValueError as e:
                 return JsonResponse({'success': False, 'errors': str(e)})
@@ -53,6 +59,8 @@ def modificar_sesion(request, sesion_id):
             'nombre': sesion.nombre,
             'dia_preferido': sesion.dia_preferido,
             'fecha_solicitud': sesion.fecha_solicitud,
+            'dia_sesion': sesion.dia_sesion,
+            'horario_sesion': sesion.horario_sesion,
             'telefono': sesion.telefono
         })
 
@@ -62,7 +70,7 @@ def modificar_sesion(request, sesion_id):
 def eliminar_sesion(request, sesion_id):
     if request.method == 'POST':
         try:
-            delete_sesion(sesion_id)
+            delete_session(sesion_id)
             return JsonResponse({'success': True, 'message': 'Sesión eliminada con éxito'})
         except ValueError as e:
             return JsonResponse({'success': False, 'errors': str(e)})

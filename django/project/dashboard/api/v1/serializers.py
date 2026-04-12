@@ -27,6 +27,8 @@ class SesionesSerializer(serializers.ModelSerializer):
         return value
 
     def validate_dia_sesion(self, value):
+        if value is None:
+            return value
         value = value.strip().title()
         if value:
             dias_validos = ['Lunes', 'Martes', 'Miércoles', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Sabado', 'Domingo']

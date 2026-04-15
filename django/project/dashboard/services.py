@@ -9,9 +9,13 @@ def register_session(data):
     horario_sesion = data.get('horario_sesion')
     telefono = data.get('telefono').strip()
 
+    if dia_sesion == '':
+        dia_sesion = None
+
     # verifico si ya existe una sesión para ese cliente (nombre + teléfono + dia de sesión)
-    if Sesiones.objects.filter(nombre__iexact = nombre, telefono = telefono, dia_sesion = dia_sesion).exists():
-        raise ValueError(f'Ya existe una sesión para el cliente {nombre} con el teléfono {telefono} para el día {dia_sesion}')
+    if not dia_sesion is None:
+        if Sesiones.objects.filter(nombre__iexact = nombre, telefono = telefono, dia_sesion = dia_sesion).exists():
+            raise ValueError(f'Ya existe una sesión para el cliente {nombre} con el teléfono {telefono} para el día {dia_sesion}')
 
     # creo la nueva sesion y la guardo en la base de datos
     nueva_sesion = Sesiones(
@@ -52,12 +56,19 @@ def update_session(sesion, data):
     horario_sesion = data.get('horario_sesion')
     telefono = data.get('telefono').strip()
 
+    if dia_sesion == '':
+        dia_sesion = None
+
+    if dia_sesion_actual == '':
+        dia_sesion_actual = None
+
     if nombre == nombre_actual and dia_preferido_actual == dia_preferido and telefono == telefono_actual and dia_sesion == dia_sesion_actual and horario_sesion == horario_sesion_actual:
         raise ValueError("No realizaste modificaciones.")
 
     # verifico si ya existe una sesión para ese cliente (nombre + teléfono + dia de sesión)
-    if Sesiones.objects.exclude(id=sesion.id).filter(nombre__iexact = nombre, telefono = telefono, dia_sesion = dia_sesion).exists():
-        raise ValueError(f'Ya existe una sesión para el cliente {nombre} con el teléfono {telefono} para el día {dia_sesion}')
+    if not dia_sesion is None:
+        if Sesiones.objects.filter(nombre__iexact = nombre, telefono = telefono, dia_sesion = dia_sesion).exists():
+            raise ValueError(f'Ya existe una sesión para el cliente {nombre} con el teléfono {telefono} para el día {dia_sesion}')
 
     # actualizo los campos de la sesión
     sesion.nombre = nombre

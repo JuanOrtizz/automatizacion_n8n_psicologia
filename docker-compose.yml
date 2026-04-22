@@ -25,6 +25,9 @@ services:
       WEBHOOK_URL: ${WEBHOOK_URL} 
       N8N_HOST: ${N8N_HOST}
       N8N_PROTOCOL: ${N8N_PROTOCOL}
+      N8N_MCP_ENABLED: true
+      N8N_BLOCK_MCP_ACCESS: false
+      N8N_METRICS_ENABLED: true
     env_file:
       - .env
 
@@ -48,7 +51,7 @@ services:
       - n8n
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
-    command: http n8n:5678 --log=stdout
+    command: http n8n:5678 --host-header=rewrite
     env_file:
       - .env
 

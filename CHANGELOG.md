@@ -1,5 +1,42 @@
 # Changelog
 ---
+## [v1.1.0] - 2026-04-22
+### Rama: release/v1.1.0
+
+#### Docs
+- Actualización de CHANGELOG.md
+- Actualización de README.md
+
+## [v1.1.0] - 2026-04-22
+### Rama: feature/docs-api
+#### Features
+- Agregado de drf-spectacular para documentación de API REST
+- Agregadas rutas `/api/docs/` (Swagger UI) y `/api/schema/` (OpenAPI 3.0)
+- Agregada documentación de endpoints en views (SesionesViewSet, UserViewSet, Token endpoints)
+
+#### Docs
+- Documentación de todos los endpoints de la API:
+  - Sesiones: list, create, retrieve, update, destroy
+  - Users: register, me, logout
+  - Token: obtain, refresh
+---
+
+## [v1.0.2] - 2026-04-14
+### Rama: hotfix/modificar-sesion
+#### Fixes
+- Corrección de bug de modificación de sesión
+
+---
+
+## [v1.0.1] - 2026-04-13
+### Rama: hotfix/debug-env-y-dockerfile-cmd
+#### Features
+- Agregado de creación de superusuario django en Dockerfile
+
+#### Fixes
+- Arreglo de cast de variable de entorno DEBUG a booleano en settings.py
+---
+
 ## [v1.0.0] - 2026-04-12
 ### Rama: release/v1.0.0
 #### Features

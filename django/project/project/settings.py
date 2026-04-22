@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'drf_spectacular',
     #Own Apps
     'dashboard',
     'accounts_auth',
@@ -162,6 +163,16 @@ REST_FRAMEWORK = {
         'login': os.getenv("LOGIN_RATE", "5/minute"),
         'register': os.getenv("REGISTER_RATE", "5/hour"),
     },
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API Proyecto Chatbots-Django Psicología',
+    'DESCRIPTION': 'API del sistema del dashboard de gestión de sesiones',
+    'VERSION': '1.1.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_PATCH': True,
+    'COMPONENT_SPLIT_REQUEST': True,
 }
 
 SIMPLE_JWT = {

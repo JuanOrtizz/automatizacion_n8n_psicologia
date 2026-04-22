@@ -34,6 +34,7 @@ El proyecto Django funciona como **backend y panel de administración** del sist
 
 - **Django**: Framework web para el backend y panel de administración
 - **Django REST Framework**: API REST para consumo externo
+- **drf-spectacular**: Documentación interactiva de API (Swagger UI + OpenAPI 3.0)
 - **JWT (djangorestframework-simplejwt)**: Autenticación mediante tokens
 - **PostgreSQL**: Base de datos relacional
 - **WhiteNoise**: Staticfiles comprimidos para producción
@@ -62,12 +63,12 @@ El sistema utiliza un esquema de autenticación dual:
 ### Rate Limiting
 Protección contra ataques de fuerza bruta mediante limitación de requests.
 
-| Endpoint | Límite | Descripción |
-|----------|--------|-------------|
-| `/api/v1/users/register/` | 5/hour | Máximo 5 registros por hora por IP |
-| `/api/v1/auth/token/` | 5/minute | Máximo 5 intentos de login por minuto |
-| `/api/v1/auth/token/refresh/` | 5/minute | Máximo 5 refresh por minuto |
-| Global (anónimo) | 100/day | Máximo 100 requests/día |
+| Endpoint                                | Límite | Descripción |
+|-----------------------------------------|--------|-------------|
+| `/accounts_auth/api/v1/users/register/` | 5/hour | Máximo 5 registros por hora por IP |
+| `/accounts_auth/api/v1/token/`                        | 5/minute | Máximo 5 intentos de login por minuto |
+| `/accounts_auth/api/v1/token/refresh/`                | 5/minute | Máximo 5 refresh por minuto |
+| Global (anónimo)                        | 100/day | Máximo 100 requests/día |
 
 ---
 
@@ -147,16 +148,24 @@ DELETE /api/v1/sesiones/{id}/     # Eliminar sesión
 
 #### Endpoints de Usuarios (accounts_auth)
 ```
-POST   /api/v1/users/register/    # Registro de nuevo usuario
-GET    /api/v1/users/me/          # Obtener perfil del usuario autenticado
-POST   /api/v1/users/logout/      # Cerrar sesión (blacklist de token)
+POST   /accounts_auth/api/v1/users/register/    # Registro de nuevo usuario
+GET    /accounts_auth/api/v1/users/me/          # Obtener perfil del usuario autenticado
+POST   /accounts_auth/api/v1/users/logout/      # Cerrar sesión (blacklist de token)
 ```
 
 #### Endpoints de Autenticación JWT
 ```
-POST   /api/v1/auth/token/        # Obtener access token (login API)
-POST   /api/v1/auth/token/refresh/  # Refrescar access token
+POST   /accounts_auth/api/v1/token/             # Obtener access token (login API)
+POST   /accounts_auth/api/v1/token/refresh/     # Refrescar access token
 ```
+
+#### Documentación de API
+La API cuenta con documentación interactiva generada automáticamente con drf-spectacular.
+
+| Ruta | Descripción |
+|------|-------------|
+| `/api/docs/` | Swagger UI - Documentación interactiva |
+| `/api/schema/` | OpenAPI 3.0 Schema (JSON) |
 
 ---
 
@@ -211,4 +220,4 @@ automatizacion_n8n_psicologia/
 
 ## Versión
 
-**v1.0.0**
+**v1.1.0**

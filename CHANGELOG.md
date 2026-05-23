@@ -1,5 +1,10 @@
 # Changelog
 ---
+## [v1.1.1] - 2026-05-23
+### Rama: hotfix/modificar-sesion2
+#### Fixes
+- Corrección de bug de modificación de sesión (Excluye la actual)
+
 ## [v1.1.0] - 2026-04-22
 ### Rama: release/v1.1.0
 

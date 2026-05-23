@@ -67,7 +67,7 @@ def update_session(sesion, data):
 
     # verifico si ya existe una sesión para ese cliente (nombre + teléfono + dia de sesión)
     if not dia_sesion is None:
-        if Sesiones.objects.filter(nombre__iexact = nombre, telefono = telefono, dia_sesion = dia_sesion).exists():
+        if Sesiones.objects.filter(nombre__iexact = nombre, telefono = telefono, dia_sesion = dia_sesion).exclude(id=sesion.id).exists():
             raise ValueError(f'Ya existe una sesión para el cliente {nombre} con el teléfono {telefono} para el día {dia_sesion}')
 
     # actualizo los campos de la sesión

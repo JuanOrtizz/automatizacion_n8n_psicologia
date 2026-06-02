@@ -1,5 +1,13 @@
 # Changelog
 ---
+## [v2.0.0] - 2026-06-02
+### Rama: release/n8n
+#### Features
+- Agregado de imágenes de workflows de n8n para Chatbot de WhatsApp e Instagram (DMs) en carpeta n8n/Chatbot_wpp y n8n/Chatbot_ig
+- Agregado de imágenes de workflows compartidos o integraciones comunes en carpeta n8n
+- Actualización de README.md con estructura del proyecto y descripción de las carpetas de n8n
+- Actualización de ChangeLog.md con nueva versión v2.0.0
+
 ## [v1.1.1] - 2026-05-23
 ### Rama: hotfix/modificar-sesion2
 #### Fixes

@@ -20,7 +20,7 @@ El proyecto Django funciona como **backend y panel de administración** del sist
 >[!TIP] 
 >Se recomienda abrir el diagrama en una nueva pestaña para una mejor visualización.
 
-## Arquitectura
+## Arquitectura del Proyecto Django (Panel de Administración y API REST)
 
 **MVT (Model-View-Template)** - Patrón de arquitectura de Django
 
@@ -30,7 +30,7 @@ El proyecto Django funciona como **backend y panel de administración** del sist
 
 ---
 
-## Tecnologías
+## Tecnologías (Panel de Administración y API REST)
 
 - **Django**: Framework web para el backend y panel de administración
 - **Django REST Framework**: API REST para consumo externo
@@ -40,13 +40,20 @@ El proyecto Django funciona como **backend y panel de administración** del sist
 - **WhiteNoise**: Staticfiles comprimidos para producción
 - **Bootstrap 5**: Frontend responsive
 - **SweetAlert2**: Notificaciones interactivas
-- **n8n**: Plataforma de automatización para chatbots
 - **Docker**: Contenerización de la aplicación
 - **Docker Compose**: Orquestación de servicios
 
+## Tecnologías (Automatización con n8n)
+- **n8n**: Plataforma de automatización para chatbots mediante workflows y subworkflows
+- **Google Sheets**: Almacenamiento de datos de usuarios y estados
+- **Google Docs**: Documentos individuales para cada paciente
+- **Gemini API**: Procesamiento cognitivo y clasificación de mensajes (Gemini 3.1 Flash-Lite)
+- **Meta API**: Gestión de mensajes y validaciones para Instagram y WhatsApp
+- **Supabase**: Base de datos en tiempo real para gestión de estados, historial de conversación (Para agente AI), hitos, tests, meditaciones y diagnosticos iniciales de los pacientes.
+
 ---
 
-## Autenticación
+## Autenticación (Panel de Administración y API REST)
 
 El sistema utiliza un esquema de autenticación dual:
 
@@ -72,7 +79,7 @@ Protección contra ataques de fuerza bruta mediante limitación de requests.
 
 ---
 
-## Modelos
+## Modelos (Panel de Administración y API REST)
 
 ### Sesiones
 Modelo para la gestión de sesiones psicológicas.
@@ -100,9 +107,9 @@ Modelo para whitelist de seguridad de emails autorizados.
 
 ---
 
-## Funcionalidades Principales
+# Funcionalidades Principales del proyecto
 
-### Dashboard
+## Dashboard
 
 #### Filtros de Sesiones
 - **Por fecha de registro:**
@@ -167,6 +174,20 @@ La API cuenta con documentación interactiva generada automáticamente con drf-s
 | `/api/docs/` | Swagger UI - Documentación interactiva |
 | `/api/schema/` | OpenAPI 3.0 Schema (JSON) |
 
+## Flujos de Automatización (Workflows n8n)
+
+### Chatbot WhatsApp
+* **Chatbot Inicio y Login:** Gestiona validaciones de formato, autenticación vía orden de compra y ruteo.
+* **Diagnóstico Inicial:** Recopila información base (estado vincular, nivel de malestar, energía, objetivo) y la guarda en un documento de Google Docs del paciente.
+* **Desarrollo IA:** Núcleo de procesamiento cognitivo que clasifica mensajes (fuera de contexto, gravedad urgente, conversación normal) usando Gemini.
+* **Gestión de Hitos, Tests y Meditaciones:** Entrega el contenido teórico secuencial, evalúa respuestas calculando subescalas y maneja las meditaciones.
+* **Perfil Final y Agendar Sesión:** Resume los hitos, elabora una conclusión y ofrece agendar cita conectándose a la API del dashboard.
+* **Eliminación de Datos:** Proceso de limpieza al finalizar el ciclo para proteger la privacidad e impedir reingresos no autorizados.
+
+### Chatbot Instagram (Gestión de DMs)
+* **Inicio y Webhooks:** Resuelve desafíos de validación (Meta API) y captura eventos en tiempo real.
+* **Control de Estado:** Valida en Google Sheets si la cuenta está en modo automático (Bot) o bajo intervención manual (Humano).
+* **Enrutamiento del Menú:** Procesa opciones para enlace profesional directo, agendamiento de sesiones (Integracion con Dashboard mediante API REST), adquisición del asistente de WhatsApp o atención personalizada.
 ---
 
 ## Requisitos Previos
@@ -203,6 +224,9 @@ automatizacion_n8n_psicologia/
 │       ├── project/           # Configuración del proyecto
 │       └── manage.py
 ├── n8n/
+│   ├──Chatbot_wpp/ # Imagenes de Workflows para Chatbot de WhatsApp
+│   ├──Chatbot_ig/ # Imagenes de Workflows para Chatbot de Instagram (DMs)
+│   └──Otros.png # Incluyen Imagenes de workflows compartidos o integraciones comunes
 ├── CHANGELOG.md
 ├── docker-compose.yml
 ├── .gitignore
@@ -220,4 +244,4 @@ automatizacion_n8n_psicologia/
 
 ## Versión
 
-**v1.1.0**
+**v1.2.0**

@@ -244,4 +244,4 @@ automatizacion_n8n_psicologia/
 
 ## Versión
 
-**v1.2.0**
+**v2.0.0**

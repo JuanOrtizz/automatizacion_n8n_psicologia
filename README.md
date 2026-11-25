@@ -1,10 +1,10 @@
-# Sistema de Chatbots y Dashboard de gestión
+# Sistema de Agentes y Dashboard de gestión
 
 ## Descripción
 
-**Sistema de Chatbots que incluye:**
-- Chatbot de atención al cliente (**Instagram**).
-- Chatbot terapéutico con IA (**WhatsApp**).
+**Sistema de Agentes que incluye:**
+- Agente de atención al cliente (**Instagram**).
+- Agente terapéutico con IA (**WhatsApp**).
 - **Dashboard web** para la gestión de sesiones psicológicas.
 
 > Utiliza **n8n** para la automatización de flujos de conversación y **Django** como backend y panel de administración.
@@ -176,7 +176,7 @@ La API cuenta con documentación interactiva generada automáticamente con drf-s
 
 ## Flujos de Automatización (Workflows n8n)
 
-### Chatbot WhatsApp
+### Agente WhatsApp
 * **Chatbot Inicio y Login:** Gestiona validaciones de formato, autenticación vía orden de compra y ruteo.
 * **Diagnóstico Inicial:** Recopila información base (estado vincular, nivel de malestar, energía, objetivo) y la guarda en un documento de Google Docs del paciente.
 * **Desarrollo IA:** Núcleo de procesamiento cognitivo que clasifica mensajes (fuera de contexto, gravedad urgente, conversación normal) usando Gemini.
@@ -184,7 +184,7 @@ La API cuenta con documentación interactiva generada automáticamente con drf-s
 * **Perfil Final y Agendar Sesión:** Resume los hitos, elabora una conclusión y ofrece agendar cita conectándose a la API del dashboard.
 * **Eliminación de Datos:** Proceso de limpieza al finalizar el ciclo para proteger la privacidad e impedir reingresos no autorizados.
 
-### Chatbot Instagram (Gestión de DMs)
+### Agente Instagram (Gestión de DMs)
 * **Inicio y Webhooks:** Resuelve desafíos de validación (Meta API) y captura eventos en tiempo real.
 * **Control de Estado:** Valida en Google Sheets si la cuenta está en modo automático (Bot) o bajo intervención manual (Humano).
 * **Enrutamiento del Menú:** Procesa opciones para enlace profesional directo, agendamiento de sesiones (Integracion con Dashboard mediante API REST), adquisición del asistente de WhatsApp o atención personalizada.
